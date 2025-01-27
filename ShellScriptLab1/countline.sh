@@ -20,17 +20,14 @@ function countFileLines
 function countTheFiles
 { 
   totalCount=0
-  for files in "$@" 
+  for files in "$inputFiles" 
   do
     filename="$files" 
     countFileLines
     ((totalCount+="$lineCount"))
-    done
-  else
-    echo "empty paramter list" 
-  
-
-fi
+  done
+  echo "empty paramter list" 
+} 
 
 
 
@@ -38,11 +35,18 @@ fi
 
 if (( $#!=0 ));
 then 
-
+  for arguments in "$@" 
+  do 
+  if [ -d $arguments ]; then
+    echo "$arguments is a directory"
+  else
+    echo "$arguments is a file" 
+  fi 
+  done
 
   ## passed paramters, need to determine file vs directory
 else 
-  
+  inputFiles=*
   countTheFiles
 
 fi 
