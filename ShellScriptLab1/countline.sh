@@ -15,21 +15,35 @@ function countFileLines
     ((++lineCount)) 
    done < "$filename"
  } 
+
 # runs countFileLines on each arguement give to the script
-totalCount=0
-if (( $#!=0 )); 
-then 
+function countTheFiles
+{ 
+  totalCount=0
   for files in "$@" 
-    do
+  do
     filename="$files" 
     countFileLines
     ((totalCount+="$lineCount"))
     done
-else
-  echo "empty paramter list" 
+  else
+    echo "empty paramter list" 
   
 
 fi
+
+
+
+#wrapper for total Count function
+
+if (( $#!=0 ));
+then 
+
+
+  ## passed paramters, need to determine file vs directory
+else 
+  
+  countTheFiles
+
+fi 
 echo $totalCount
-
-
