@@ -17,7 +17,10 @@ function countFileLines
    done < "$filename"
  } 
 
-
+# countline
+# if given a series of paramters will call countFileLines on the files and itself recursively on the given directories, 
+# else it will call istelf recursivley on all "regular files" within the present directory.
+# if any file cannot be read will print the error message to 'error.txt'
 if (( "$#">0 )) 
 then
   for arguments in "$@" 
@@ -30,7 +33,7 @@ then
       countFileLines
       ((totalCount+="$lineCount"))
 		else 
-		cat $arguments 2>> 'error.txt' 
+		  cat $arguments 2>> 'error.txt' 
     fi 
   done
 	else

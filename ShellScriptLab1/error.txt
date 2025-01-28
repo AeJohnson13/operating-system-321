@@ -1,1 +1,2 @@
-cat: ./abcd.txt: Permission denied
+cat: locked_directory: Permission denied
+cat: unreadable.txt: Permission denied
