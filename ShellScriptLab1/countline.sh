@@ -2,8 +2,9 @@
 
 # countline.sh
 # Alex Johnson
-# 1/23/2025
+# 1/23/2025 
 
+totalCount=0 
 
 # count lines of document filename,
 # returns line count in $? variable 
@@ -16,38 +17,25 @@ function countFileLines
    done < "$filename"
  } 
 
-# runs countFileLines on each arguement give to the script
-function countTheFiles
-{ 
-  totalCount=0
-  for files in "$inputFiles" 
-  do
-    filename="$files" 
-    countFileLines
-    ((totalCount+="$lineCount"))
-  done
-  echo "empty paramter list" 
-} 
 
-
-
-#wrapper for total Count function
-
-if (( $#!=0 ));
-then 
+if (( "$#">0 )) 
+then
   for arguments in "$@" 
-  do 
-  if [ -d $arguments ]; then
-    echo "$arguments is a directory"
-  else
-    echo "$arguments is a file" 
-  fi 
+  do
+    if [ -d "$arguments" -a -r "$arguments" ]; then
+       # found a directory call recursively 
+       ((totalCount+=$(bash $0 "$arguments"/*)))
+    elif [ -r "$arguments" ]; then  
+      filename="$arguments" 
+      countFileLines
+      ((totalCount+="$lineCount"))
+		else 
+		cat $arguments 2>> 'error.txt' 
+    fi 
   done
+	else
+  	((totalCount+=$(bash $0 $(find . -maxdepth 1  -type f))))
+	fi
 
-  ## passed paramters, need to determine file vs directory
-else 
-  inputFiles=*
-  countTheFiles
-
-fi 
 echo $totalCount
+
