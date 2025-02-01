@@ -1,2 +1,0 @@
-cat: locked_directory: Permission denied
-cat: unreadable.txt: Permission denied
