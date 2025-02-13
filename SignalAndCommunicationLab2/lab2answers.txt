@@ -1,0 +1,30 @@
+Alex Johnson
+CS F321 Operating Systems
+Lab 2 Process and Inter Process Communication
+
+
+Part 1 
+1.🗸
+2.
+waiting...
+^C recieved an interrupt signal through Ctrl-C.
+Going to sleep.
+ Notice the process is not exiting immediatelyOut of here. 
+Now the process will terminate with the the exit system call  
+
+3.
+* main calls signal and sets the SIGINT signal to be handled by sigHandler instead of the default handler
+* main then calls printf, which prints "waiting... \n"
+* it then pauses
+
+* when you hit ctrl-c, it sends the SIGINT signal, which is the sent to sigHandler
+* sigHandler calls printf, which prints "received an interrupt signal through Ctrl-C.\n
+* it then calls printf again, which prints "Going to sleep.\n Notice the process is not exiting immediately"
+* it then sleeps for 1 second
+* after the sleep it prints "Out of here.\n", followed by "Now the process will terminate with the exit system call \n"
+* it then calls exit(0) which closes the program
+
+
+Part 2
+
+
