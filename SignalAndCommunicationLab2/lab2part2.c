@@ -10,8 +10,9 @@ int main()
 
 	signal(SIGUSR1, sigHandler);
 	signal(SIGUSR2, sigHandler);
+	
 
-	int	pid = fork();
+  int	pid = fork();
 	
 	if(pid == 0) 
 	{
@@ -29,8 +30,13 @@ int main()
 			sleep(r);  	
 		}
 	}  
-	wait(NULL);
-
+	//wait(NULL);
+  int status;
+  waitpid(pid, &status, 0);
+  if ( WIFEXITED(status) ){
+    int exit_status = WEXITSTATUS(status); //exit_status variable store the
+    printf("Exit status of the child was %d\n", exit_status);
+  }
 	
 } 
 
@@ -46,4 +52,3 @@ void sigHandler(int sigNum)
 		printf("SIGUSR2 recieved\n");
 	}  
 } 
-
